@@ -1,3 +1,10 @@
+-- Should we define types (enum) for condition fields? Else we have million different configurations
+CREATE TYPE SoilType AS ENUM ('Sandy','Clay','Silt','Loam','Peat','Chalky');
+-- Here partial shade is shadier than partial sun
+CREATE TYPE Sunlight AS ENUM ('Full shade', 'Dappled sun', 'Partial shade', 'Partial sun', 'Full sun');
+CREATE TYPE Nutrients AS ENUM('Fertilized', 'Depleted');
+CREATE TYPE Hydration AS ENUM('Dry', 'Moist', 'Wet');
+
 -- Create tables for GardenManager
 
 CREATE TABLE Activity (
@@ -28,8 +35,10 @@ CREATE TABLE Variety (
 	Species			CHAR(30),
 	PlantForm		CHAR(20),
 	FrostTolerant	BOOLEAN,
+	DaysToMaturity	INTEGER,
+	BloomPeriod		CHAR(30),
 	PRIMARY KEY (Variety, Genus, Species),
-	FOREIGN KEY (Genus, Species) REFERENCES Species ON DELETE CASCADE
+	FOREIGN KEY (Genus, Species) REFERENCES Species
 );
 
 CREATE TABLE Environment( 
@@ -44,14 +53,16 @@ CREATE TABLE Pot (
 	"Radius"		REAL,
 	"Height"		REAL,
 	PRIMARY KEY (EnvironmentID),
-	FOREIGN KEY (EnvironmentID) REFERENCES Environment
+	FOREIGN KEY (EnvironmentID) REFERENCES Environment 
+		ON DELETE CASCADE 
 );
 
 CREATE TABLE Bed ( 
 	EnvironmentID 	INTEGER,
 	SurfaceArea		REAL,
 	PRIMARY KEY (EnvironmentID),
-	FOREIGN KEY (EnvironmentID) REFERENCES Environment
+	FOREIGN KEY (EnvironmentID) REFERENCES Environment 
+		ON DELETE CASCADE
 );
 
 CREATE TABLE Plant (
@@ -105,7 +116,7 @@ CREATE TABLE Environment_Target (
 	SoilType		CHAR(20),
 	Hydration		CHAR(20),
 	PRIMARY KEY (EnvironmentID),
-	FOREIGN KEY (EnvironmentID) REFERENCES Environment,
+	FOREIGN KEY (EnvironmentID) REFERENCES Environment ON DELETE CASCADE,
 	FOREIGN KEY(Sunlight, Nutrients, SoilType, Hydration) REFERENCES "Condition"
 );
 
@@ -116,7 +127,7 @@ CREATE TABLE Environment_CurrentlyHas (
 	SoilType		CHAR(20),
 	Hydration		CHAR(20),
 	PRIMARY KEY (EnvironmentID),
-	FOREIGN KEY (EnvironmentID) REFERENCES Environment,
+	FOREIGN KEY (EnvironmentID) REFERENCES Environment ON DELETE CASCADE,
 	FOREIGN KEY(Sunlight, Nutrients, SoilType, Hydration) REFERENCES "Condition"
 );
 
@@ -124,10 +135,11 @@ CREATE TABLE Environment_CurrentlyHas (
 CREATE TABLE Pest (
 	PestName		CHAR(30),
 	"Type"			CHAR(30),
-	Description		CHAR(100),
-	Control 		CHAR(100),
+	Description		CHAR(210),
+	Control 		CHAR(200),
 	PRIMARY KEY (PestName)
 );
+
 
 CREATE TABLE PestSighting (
 	SightingID		INTEGER,

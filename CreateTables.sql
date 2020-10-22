@@ -1,31 +1,26 @@
-## Super rough outline of the tables we may or may not need lol, TBD
+-- Create tables for GardenManager
 
 CREATE TABLE Activity (
 	ActivityID		INTEGER,
 	ActivityType	CHAR(50)	NOT NULL,
-	EnvironmentID	INTEGER,
 	Date			DATE,
 	PRIMARY KEY (ActivityID)
-	FOREIGN KEY (EnvironmentID) REFERENCES Environment
-)
+);
 
-CREATE TABLE Plant (
-	PlantID			INTEGER,
-	Variety			CHAR(50)
-	Colour			CHAR(20),
-	HealthStatus	CHAR(20),
-	PRIMARY KEY (PlantID)
-	FOREIGN KEY (Variety) REFERENCES Variety
-)
+CREATE TABLE PlantFamily ( 
+	Genus			CHAR(30),
+	PlantFamily 	CHAR(30),
+	PRIMARY KEY (Genus)
+);
 
 CREATE TABLE Species (
 	Genus			CHAR(30),
 	Species			CHAR(30),
-	PlantFamily		CHAR(20),
 	CommonName		CHAR(40),
 	LifeCycle		CHAR(10),
-	PRIMARY KEY (Genus, Species)
-)
+	PRIMARY KEY (Genus, Species),
+	FOREIGN KEY (Genus) REFERENCES PlantFamily
+);
 
 CREATE TABLE Variety (
 	Variety			CHAR(50),
@@ -35,61 +30,122 @@ CREATE TABLE Variety (
 	FrostTolerant	BOOLEAN,
 	PRIMARY KEY (Variety, Genus, Species),
 	FOREIGN KEY (Genus, Species) REFERENCES Species ON DELETE CASCADE
-)
+);
 
-# should ideal conditions be their own table? since Variety can have multiple ideal conditions
-CREATE TABLE IdealConditions (
-	Variety			CHAR(50),
-	Sunlight 		CHAR(20),
-	Drainage		CHAR(20),
-	Nutrients		CHAR(30),
-	SoilType		CHAR(20),
-	Hydration		CHAR(20)
-	FOREIGN KEY (Variety) REFERENCES Variety,
-	FOREIGN KEY(Sunlight, Drainage, Nutrients, SoilType, Hydration) REFERENCES Condition
-)
-
-CREATE TABLE Environment (
+CREATE TABLE Environment( 
 	EnvironmentID	INTEGER,
-	Location		CHAR(30),
-	CurrSunlight	CHAR(20),
-	CurrDrainage	CHAR(20),
-	CurrNutrients	CHAR(30),
-	CurrSoilType
+	"Location"		CHAR(30),
 	PRIMARY KEY (EnvironmentID)
-)
+);
 
-# how to show create subtypes??
-CREATE TABLE Pot (
+CREATE TABLE Pot ( 
+	EnvironmentID	INTEGER, 
+	Colour			CHAR(20),
+	"Radius"		REAL,
+	"Height"		REAL,
+	PRIMARY KEY (EnvironmentID),
+	FOREIGN KEY (EnvironmentID) REFERENCES Environment
+);
 
-	
-	PRIMARY KEY ()
-)
+CREATE TABLE Bed ( 
+	EnvironmentID 	INTEGER,
+	SurfaceArea		REAL,
+	PRIMARY KEY (EnvironmentID),
+	FOREIGN KEY (EnvironmentID) REFERENCES Environment
+);
 
+CREATE TABLE Plant (
+	PlantID			INTEGER,
+	Variety			CHAR(50),
+	Genus			CHAR(30),
+	Species			CHAR(30),
+	Colour			CHAR(20),
+	HealthStatus	CHAR(20),
+	EnvironmentID	INTEGER,
+	PRIMARY KEY (PlantID),
+	FOREIGN KEY (Variety, Genus, Species) REFERENCES Variety,
+	FOREIGN KEY	(EnvironmentID) REFERENCES Environment
+);
 
-CREATE TABLE Condition (
-	Sunlight 		CHAR(20),
+CREATE TABLE Affects (
+	PlantID			INTEGER,
+	ActivityID		INTEGER,
+	PRIMARY KEY (PlantID, ActivityID),
+	FOREIGN KEY (PlantID) REFERENCES Plant,
+	FOREIGN KEY (ActivityID) REFERENCES Activity
+);
+
+CREATE TABLE Maintains (
+	ActivityID		INTEGER,
+	EnvironmentID	INTEGER,
+	PRIMARY KEY (ActivityID, EnvironmentID),
+	FOREIGN KEY (EnvironmentID) REFERENCES Environment,
+	FOREIGN KEY (ActivityID) REFERENCES Activity
+);
+
+CREATE TABLE Drainage ( 
+	SoilType		CHAR(20),
 	Drainage		CHAR(20),
+	PRIMARY KEY (SoilType)
+);
+
+CREATE TABLE "Condition" (
+	Sunlight 		CHAR(20),
 	Nutrients		CHAR(30),
 	SoilType		CHAR(20),
-	Hydration		CHAR(20)
-	PRIMARY KEY (Sunlight, Drainage, Nutrients, SoilType, Hydration)
-)
+	Hydration		CHAR(20),
+	PRIMARY KEY (Sunlight, Nutrients, SoilType, Hydration),
+	FOREIGN KEY (SoilType) REFERENCES Drainage
+);
+
+CREATE TABLE Environment_Target (
+	EnvironmentID	INTEGER,
+	Sunlight 		CHAR(20),
+	Nutrients		CHAR(30),
+	SoilType		CHAR(20),
+	Hydration		CHAR(20),
+	PRIMARY KEY (EnvironmentID),
+	FOREIGN KEY (EnvironmentID) REFERENCES Environment,
+	FOREIGN KEY(Sunlight, Nutrients, SoilType, Hydration) REFERENCES "Condition"
+);
+
+CREATE TABLE Environment_CurrentlyHas (
+	EnvironmentID	INTEGER,
+	Sunlight 		CHAR(20),
+	Nutrients		CHAR(30),
+	SoilType		CHAR(20),
+	Hydration		CHAR(20),
+	PRIMARY KEY (EnvironmentID),
+	FOREIGN KEY (EnvironmentID) REFERENCES Environment,
+	FOREIGN KEY(Sunlight, Nutrients, SoilType, Hydration) REFERENCES "Condition"
+);
+
 
 CREATE TABLE Pest (
 	PestName		CHAR(30),
-	PestType		CHAR(30),
+	"Type"			CHAR(30),
 	Description		CHAR(100),
 	Control 		CHAR(100),
-	PRIMARY KEY (PestName),
-)
+	PRIMARY KEY (PestName)
+);
 
-CREATE TABLE ( PestSighting
+CREATE TABLE PestSighting (
 	SightingID		INTEGER,
 	PestName		CHAR(30),
 	Severity		CHAR(20),
 	"Date"			DATE,
+	PlantID			INTEGER,
 	PRIMARY KEY (SightingID),
-	FOREIGN KEY (PestName) REFERENCES Pest
-)
+	FOREIGN KEY (PestName) REFERENCES Pest,
+	FOREIGN KEY (PlantID) REFERENCES Plant
+);
 
+CREATE TABLE IsSusceptibleTo ( 
+	Variety			CHAR(50),
+	Genus			CHAR(30),
+	Species			CHAR(30),
+	PestName		CHAR(30),
+	PRIMARY KEY (Variety, Genus, Species, PestName),
+	FOREIGN KEY (Variety, Genus, Species) REFERENCES Variety,
+	FOREIGN KEY (PestName) REFERENCES Pest
+);

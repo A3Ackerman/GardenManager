@@ -96,26 +96,26 @@ CREATE TABLE Maintains (
 );
 
 CREATE TABLE Drainage ( 
-	SoilType		CHAR(20),
-	Drainage		CHAR(20),
+	SoilType		enum_SoilType,
+	Drainage		enum_Drainage,
 	PRIMARY KEY (SoilType)
 );
 
 CREATE TABLE "Condition" (
-	Sunlight 		CHAR(20),
-	Nutrients		CHAR(30),
-	SoilType		CHAR(20),
-	Hydration		CHAR(20),
+	Sunlight 		enum_Sunlight,
+	Nutrients		enum_Nutrients,
+	SoilType		enum_SoilType,
+	Hydration		enum_Hydration,
 	PRIMARY KEY (Sunlight, Nutrients, SoilType, Hydration),
 	FOREIGN KEY (SoilType) REFERENCES Drainage
 );
 
 CREATE TABLE Environment_Target (
 	EnvironmentID	INTEGER,
-	Sunlight 		CHAR(20),
-	Nutrients		CHAR(30),
-	SoilType		CHAR(20),
-	Hydration		CHAR(20),
+	Sunlight 		enum_Sunlight,
+	Nutrients		enum_Nutrients,
+	SoilType		enum_SoilType,
+	Hydration		enum_Hydration,
 	PRIMARY KEY (EnvironmentID),
 	FOREIGN KEY (EnvironmentID) REFERENCES Environment ON DELETE CASCADE,
 	FOREIGN KEY(Sunlight, Nutrients, SoilType, Hydration) REFERENCES "Condition"
@@ -123,10 +123,10 @@ CREATE TABLE Environment_Target (
 
 CREATE TABLE Environment_CurrentlyHas (
 	EnvironmentID	INTEGER,
-	Sunlight 		CHAR(20),
-	Nutrients		CHAR(30),
-	SoilType		CHAR(20),
-	Hydration		CHAR(20),
+	Sunlight 		enum_Sunlight,
+	Nutrients		enum_Nutrients,
+	SoilType		enum_SoilType,
+	Hydration		enum_Hydration,
 	PRIMARY KEY (EnvironmentID),
 	FOREIGN KEY (EnvironmentID) REFERENCES Environment ON DELETE CASCADE,
 	FOREIGN KEY(Sunlight, Nutrients, SoilType, Hydration) REFERENCES "Condition"

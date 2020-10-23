@@ -383,3 +383,93 @@ INSERT INTO "GardenManager".maintains (activityid,environmentid) VALUES
 	 (8,8),
 	 (9,9),
 	 (10,10);
+
+-- Plants
+INSERT INTO "GardenManager".plant (plantid,variety,genus,species,colour,healthstatus,environmentid) VALUES
+	 (1,'Prizehead','Lactuca','sativa','','',1),
+	 (2,'Scarlet nantes','Daucus','carota','','',2),
+	 (3,'Detroit dark red','Beta','vulgaris','','',3),
+	 (4,'Kale green curled','Brassica','oleracea','','',4),
+	 (5,'Cabbage red express','Brassica','oleracea','','',5),
+	 (6,'Broccoli','Brassica','oleracea','','',6),
+	 (7,'Brussels sprouts','Brassica','oleracea','','',7),
+	 (8,'Kale lacinato','Brassica','oleracea','','',9),
+	 (9,'Canadian early supersweet hybrid corn','Zea','mays','','',10),
+	 (10,'Glaskin''s Perpetual Rhubarb','Rheum','rhabarbarum','','',11);
+INSERT INTO "GardenManager".plant (plantid,variety,genus,species,colour,healthstatus,environmentid) VALUES
+	 (11,'Fresca strawberries','Fragaria','vesca','','',12),
+	 (12,'Spearmint','Mentha','spicata','','',8),
+	 (13,'Peppermint','Metha','x piperata','','',8);
+
+-- PestSighting 
+INSERT INTO "GardenManager".pestsighting (sightingid,pestname,severity,"Date",plantid) VALUES
+	 (1,'Cabbage aphid','Mild','2020-07-15',5),
+	 (2,'Cabbage moth','Mild','2020-07-16',4),
+	 (3,'Leafminer','Moderate','2020-07-17',7),
+	 (4,'Mosaic virus','Severe','2020-07-18',1),
+	 (5,'Rust','Moderate','2020-07-19',2),
+	 (6,'Slug','Severe','2020-07-20',11);
+
+-- Environment_Target 
+INSERT INTO "GardenManager".environment_target (environmentid,sunlight,nutrients,soiltype,hydration) VALUES
+	 (1,'Dappled sun','Fertilized','Sandy','Dry'),
+	 (2,'Full shade','Depleted','Clay','Moist'),
+	 (3,'Full sun','Fertilized','Silt','Wet'),
+	 (4,'Partial shade','Depleted','Loam','Moist'),
+	 (5,'Partial sun','Fertilized','Peat','Wet'),
+	 (6,'Dappled sun','Depleted','Chalky','Wet'),
+	 (7,'Full shade','Fertilized','Sandy','Dry'),
+	 (8,'Full sun','Depleted','Clay','Wet'),
+	 (9,'Partial shade','Fertilized','Silt','Moist'),
+	 (10,'Partial sun','Depleted','Loam','Moist');
+INSERT INTO "GardenManager".environment_target (environmentid,sunlight,nutrients,soiltype,hydration) VALUES
+	 (11,'Full shade','Fertilized','Peat','Wet'),
+	 (12,'Partial sun','Depleted','Chalky','Dry');
+
+-- Environment_CurrentlyHas
+INSERT INTO "GardenManager".environment_currentlyhas (environmentid,sunlight,nutrients,soiltype,hydration) VALUES
+	 (2,'Full shade','Fertilized','Clay','Dry'),
+	 (1,'Dappled sun','Fertilized','Sandy','Dry'),
+	 (3,'Full sun','Fertilized','Silt','Wet'),
+	 (4,'Partial shade','Depleted','Loam','Moist'),
+	 (5,'Partial sun','Fertilized','Peat','Wet'),
+	 (6,'Dappled sun','Depleted','Chalky','Wet'),
+	 (7,'Full shade','Fertilized','Sandy','Dry'),
+	 (8,'Full sun','Depleted','Clay','Wet'),
+	 (9,'Partial shade','Fertilized','Silt','Moist'),
+	 (10,'Partial sun','Depleted','Loam','Moist');
+INSERT INTO "GardenManager".environment_currentlyhas (environmentid,sunlight,nutrients,soiltype,hydration) VALUES
+	 (11,'Full shade','Fertilized','Peat','Wet'),
+	 (12,'Partial sun','Depleted','Chalky','Dry');
+
+-- Affects 
+INSERT INTO "GardenManager".affects (plantid,activityid) VALUES
+	 (1,1),
+	 (2,1),
+	 (3,1),
+	 (4,1),
+	 (5,1),
+	 (6,1),
+	 (7,1),
+	 (12,1),
+	 (8,1),
+	 (9,1);
+INSERT INTO "GardenManager".affects (plantid,activityid) VALUES
+	 (10,1),
+	 (11,1),
+	 (4,2),
+	 (8,2),
+	 (5,3),
+	 (6,3),
+	 (7,4),
+	 (3,5),
+	 (4,5),
+	 (10,5);
+INSERT INTO "GardenManager".affects (plantid,activityid) VALUES
+	 (1,6),
+	 (2,7),
+	 (4,7),
+	 (12,7),
+	 (13,8),
+	 (8,9),
+	 (9,10);

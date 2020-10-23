@@ -1,4 +1,3 @@
--- populate tables
 INSERT INTO "GardenManager"."Condition" (sunlight,nutrients,soiltype,hydration) VALUES
 	 ('Full shade','Fertilized','Sandy','Dry'),
 	 ('Full shade','Fertilized','Sandy','Moist'),

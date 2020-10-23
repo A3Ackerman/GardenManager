@@ -1,9 +1,10 @@
 -- Should we define types (enum) for condition fields? Else we have million different configurations
-CREATE TYPE SoilType AS ENUM ('Sandy','Clay','Silt','Loam','Peat','Chalky');
+CREATE TYPE enum_SoilType AS ENUM ('Sandy','Clay','Silt','Loam','Peat','Chalky');
 -- Here partial shade is shadier than partial sun
-CREATE TYPE Sunlight AS ENUM ('Full shade', 'Dappled sun', 'Partial shade', 'Partial sun', 'Full sun');
-CREATE TYPE Nutrients AS ENUM('Fertilized', 'Depleted');
-CREATE TYPE Hydration AS ENUM('Dry', 'Moist', 'Wet');
+CREATE TYPE enum_Sunlight AS ENUM ('Full shade', 'Dappled sun', 'Partial shade', 'Partial sun', 'Full sun');
+CREATE TYPE enum_Nutrients AS ENUM('Fertilized', 'Depleted');
+CREATE TYPE enum_Hydration AS ENUM('Dry', 'Moist', 'Wet');
+CREATE TYPE enum_Drainage AS ENUM('Good', 'Fair', 'Poor');
 
 -- Create tables for GardenManager
 

@@ -42,7 +42,7 @@ CREATE TABLE Variety (
 	FOREIGN KEY (Genus, Species) REFERENCES Species
 );
 
-CREATE TABLE Environment( 
+CREATE TABLE Environment ( 
 	EnvironmentID	INTEGER,
 	"Location"		CHAR(30),
 	PRIMARY KEY (EnvironmentID)
@@ -147,10 +147,8 @@ CREATE TABLE PestSighting (
 	PestName		CHAR(30),
 	Severity		CHAR(20),
 	"Date"			DATE,
-	PlantID			INTEGER,
 	PRIMARY KEY (SightingID),
-	FOREIGN KEY (PestName) REFERENCES Pest,
-	FOREIGN KEY (PlantID) REFERENCES Plant
+	FOREIGN KEY (PestName) REFERENCES Pest
 );
 
 CREATE TABLE IsSusceptibleTo ( 
@@ -180,6 +178,9 @@ CREATE TABLE Has (
     PlantID			INTEGER,
     SightingID		INTEGER,
     PRIMARY KEY (PlantID, SightingID),
-    FOREIGN KEY (PlantID, SightingID)
+    FOREIGN KEY (PlantID) REFERENCES Plant, 
+    FOREIGN KEY (SightingID) REFERENCES PestSighting
 );
+
+
 

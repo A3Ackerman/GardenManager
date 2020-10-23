@@ -1,4 +1,4 @@
--- Should we define types (enum) for condition fields? Else we have million different configurations
+-- Define enumerated data types
 CREATE TYPE enum_SoilType AS ENUM ('Sandy','Clay','Silt','Loam','Peat','Chalky');
 -- Here partial shade is shadier than partial sun
 CREATE TYPE enum_Sunlight AS ENUM ('Full shade', 'Dappled sun', 'Partial shade', 'Partial sun', 'Full sun');

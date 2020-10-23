@@ -11,9 +11,9 @@ INSERT INTO "GardenManager".issusceptibleto (variety,genus,species,pestname) VAL
 	 ('Canadian early supersweet hybrid corn','Zea','mays','Rust');
 INSERT INTO "GardenManager".issusceptibleto (variety,genus,species,pestname) VALUES
 	 ('Canadian early supersweet hybrid corn','Zea','mays','Smut'),
-	 ('Glaskin''s Perpetual Rhubarb','Rheum','rhabarbarum','Slugs'),
-	 ('Fresca strawberries','Fragaria','vesca','Slugs'),
-	 ('Prizehead','Lactuca','sativa','Slugs'),
-	 ('Scarlet nantes','Daucus','carota','Slugs'),
+	 ('Glaskin''s Perpetual Rhubarb','Rheum','rhabarbarum','Slug'),
+	 ('Fresca strawberries','Fragaria','vesca','Slug'),
+	 ('Prizehead','Lactuca','sativa','Slug'),
+	 ('Scarlet nantes','Daucus','carota','Slug'),
 	 ('Kale lacinato','Brassica','oleracea','Powdery mildew'),
 	 ('Broccoli','Brassica','oleracea','Mosaic virus');

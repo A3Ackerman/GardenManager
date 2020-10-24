@@ -18,7 +18,8 @@ INSERT INTO "GardenManager".plantfamily (genus,plantfamily) VALUES
 	 ('Rheum','Polygonaceae'),
 	 ('Solanum','Solanaceae'),
 	 ('Spinacia','Chenopodiaceae'),
-	 ('Zea','Gramineae');
+	 ('Zea','Gramineae'),
+	 ('Tropaeolum','Tropaeolaeae');
 	 
 -- Species
 INSERT INTO "GardenManager".species (genus,species,commonname,lifecycle) VALUES
@@ -41,24 +42,26 @@ INSERT INTO "GardenManager".species (genus,species,commonname,lifecycle) VALUES
 	 ('Zea','mays','Corn','Annual'),
 	 ('Spinacia','oleracea','Spinach','Annual'),
 	 ('Mentha','spicata','Spearmint','Perennial'),
-	 ('Metha','x piperata','Peppermint','Perennial');
+	 ('Metha','x piperata','Peppermint','Perennial'),
+	 ('Tropaeolum','majus','Garden Nasturtium','Annual');
 
 -- Variety
-INSERT INTO "GardenManager".variety (variety,genus,species,plantform,frosttolerant) VALUES
-	 ('Prizehead','Lactuca','sativa','leaf vegetable',false),
-	 ('Scarlet nantes','Daucus','carota','root vegetable',false),
-	 ('Detroit dark red','Beta','vulgaris','root vegetable',true),
-	 ('Kale green curled','Brassica','oleracea','leaf vegetable',true),
-	 ('Cabbage red express','Brassica','oleracea','leaf vegetable',true),
-	 ('Broccoli','Brassica','oleracea','leaf vegetable',true),
-	 ('Brussels sprouts','Brassica','oleracea','leaf vegetable',true),
-	 ('Kale lacinato','Brassica','oleracea','leaf vegetable',true),
-	 ('Canadian early supersweet hybrid corn','Zea','mays','vegetable',false),
-	 ('Glaskin''s Perpetual Rhubarb','Rheum','rhabarbarum','stalks vegetable',true);
-INSERT INTO "GardenManager".variety (variety,genus,species,plantform,frosttolerant) VALUES
-	 ('Fresca strawberries','Fragaria','vesca','sprawling fruit',true),
-	 ('Spearmint','Mentha','spicata','herb',true),
-	 ('Peppermint','Metha','x piperata','herb',true);
+INSERT INTO "GardenManager".variety (variety,genus,species,plantform,frosttolerant,daystomaturity,bloomperiod) VALUES
+	 ('Fresca strawberries','Fragaria','vesca','sprawling fruit',true,NULL,NULL),
+	 ('Scarlet nantes','Daucus','carota','root vegetable',false,68,NULL),
+	 ('Detroit dark red','Beta','vulgaris','root vegetable',true,55,NULL),
+	 ('Jewel mix','Tropaeolum','majus','flower',false,NULL,'All summer'),
+	 ('Prizehead','Lactuca','sativa','leaf vegetable',false,30,NULL),
+	 ('Kale green curled','Brassica','oleracea','leaf vegetable',true,65,NULL),
+	 ('Cabbage red express','Brassica','oleracea','leaf vegetable',true,65,NULL),
+	 ('Broccoli','Brassica','oleracea','leaf vegetable',true,65,NULL),
+	 ('Brussels sprouts','Brassica','oleracea','leaf vegetable',true,65,NULL),
+	 ('Kale lacinato','Brassica','oleracea','leaf vegetable',true,65,NULL);
+INSERT INTO "GardenManager".variety (variety,genus,species,plantform,frosttolerant,daystomaturity,bloomperiod) VALUES
+	 ('Canadian early supersweet hybrid corn','Zea','mays','vegetable',false,90,NULL),
+	 ('Glaskin''s Perpetual Rhubarb','Rheum','rhabarbarum','stalks vegetable',true,90,NULL),
+	 ('Spearmint','Mentha','spicata','herb',true,60,NULL),
+	 ('Peppermint','Metha','x piperata','herb',true,60,NULL);
 
 -- Drainage
 INSERT INTO "GardenManager".drainage (soiltype,drainage) VALUES
@@ -386,20 +389,21 @@ INSERT INTO "GardenManager".maintains (activityid,environmentid) VALUES
 
 -- Plants
 INSERT INTO "GardenManager".plant (plantid,variety,genus,species,colour,healthstatus,environmentid) VALUES
-	 (1,'Prizehead','Lactuca','sativa','','',1),
-	 (2,'Scarlet nantes','Daucus','carota','','',2),
-	 (3,'Detroit dark red','Beta','vulgaris','','',3),
-	 (4,'Kale green curled','Brassica','oleracea','','',4),
-	 (5,'Cabbage red express','Brassica','oleracea','','',5),
-	 (6,'Broccoli','Brassica','oleracea','','',6),
-	 (7,'Brussels sprouts','Brassica','oleracea','','',7),
-	 (8,'Kale lacinato','Brassica','oleracea','','',9),
-	 (9,'Canadian early supersweet hybrid corn','Zea','mays','','',10),
-	 (10,'Glaskin''s Perpetual Rhubarb','Rheum','rhabarbarum','','',11);
+	 (14,'Jewel mix','Tropaeolum','majus','Mix','Good',1),
+	 (1,'Prizehead','Lactuca','sativa','','Good',1),
+	 (2,'Scarlet nantes','Daucus','carota','','Fair',2),
+	 (3,'Detroit dark red','Beta','vulgaris','','Good',3),
+	 (4,'Kale green curled','Brassica','oleracea','','Good',4),
+	 (5,'Cabbage red express','Brassica','oleracea','Red','Fair',5),
+	 (6,'Broccoli','Brassica','oleracea','','Fair',6),
+	 (7,'Brussels sprouts','Brassica','oleracea','','Good',7),
+	 (8,'Kale lacinato','Brassica','oleracea','Green','Good',9),
+	 (9,'Canadian early supersweet hybrid corn','Zea','mays','','Good',10);
 INSERT INTO "GardenManager".plant (plantid,variety,genus,species,colour,healthstatus,environmentid) VALUES
-	 (11,'Fresca strawberries','Fragaria','vesca','','',12),
-	 (12,'Spearmint','Mentha','spicata','','',8),
-	 (13,'Peppermint','Metha','x piperata','','',8);
+	 (10,'Glaskin''s Perpetual Rhubarb','Rheum','rhabarbarum','','Good',11),
+	 (11,'Fresca strawberries','Fragaria','vesca','','Good',12),
+	 (12,'Spearmint','Mentha','spicata','','Good',8),
+	 (13,'Peppermint','Metha','x piperata','','Good',8);
 
 -- PestSighting 
 INSERT INTO "GardenManager".pestsighting (sightingid,pestname,severity,"Date") VALUES

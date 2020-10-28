@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+   gardenmanager:
+    build: .
+    ports:
+      - "5000:5000"
+   db:
+    image: postgres:13.0

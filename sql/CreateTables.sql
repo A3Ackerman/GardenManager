@@ -76,7 +76,7 @@ CREATE TABLE Plant (
 	EnvironmentID	INTEGER,
 	PRIMARY KEY (PlantID),
 	FOREIGN KEY (Variety, Genus, Species) REFERENCES Variety,
-	FOREIGN KEY	(EnvironmentID) REFERENCES Environment
+	FOREIGN KEY (EnvironmentID) REFERENCES Environment ON DELETE CASCADE
 );
 
 CREATE TABLE Affects (

@@ -4,5 +4,15 @@ services:
     build: .
     ports:
       - "5000:5000"
+    depends_on:
+     - db
    db:
     image: postgres:13.0
+    environment:
+      POSTGRES_USER: GardenManager
+      POSTGRES_PASSWORD: gardenManager
+      POSTGRES_DB: GardenManager
+    volumes:
+      - ./sql/:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"

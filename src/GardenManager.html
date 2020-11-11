@@ -1,4 +1,13 @@
+<title>GardenManager</title>
+
 <div>
-    <p> Hello, this is the GardenManager</p>
+    <h1>Hello, this is the GardenManager!</h1>
 </div>
-<button>Button 1</button>
+<form action="/" method="POST">
+  <button name='sql' value="query1">Button 1</button>
+</form>
+{% if query1 %}
+    <p> Button 1 was pressed </p>
+{% else %}
+    <p> Button 1 hasn't been pressed </p>
+{% endif %}

@@ -14,7 +14,8 @@ def hello():
     display = False
     if request.method == 'POST':
         display = True
-        connectAndSelect()
+        selectQ = "Select plantID, healthstatus from plant;"
+        print(connectAndQuery(selectQ))
     return render_template('GardenManager.html', query1=display)
 
 
@@ -23,14 +24,15 @@ def button1():
     return render_template('GardenManager.html', query1=True)
 
 
-def connectAndSelect():
+def connectAndQuery(sql):
     conn = psycopg2.connect(f'dbname={db} user={user} password={pw} host={url}')
     cur = conn.cursor()
-    cur.execute("Select plantID from plant;")
-    print(cur.fetchall())
+    cur.execute(sql)
+    res = cur.fetchall()
     conn.commit()
     cur.close()
     conn.close()
+    return res
 
 
 if __name__ == '__main__':

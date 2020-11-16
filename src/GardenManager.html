@@ -3,11 +3,47 @@
 <div>
     <h1>Hello, this is the GardenManager!</h1>
 </div>
-<form action="/" method="POST">
-  <button name='sql' value="query1">Button 1</button>
-</form>
-{% if query1 %}
-    <p> Button 1 was pressed </p>
-{% else %}
-    <p> Button 1 hasn't been pressed </p>
-{% endif %}
+
+<div>
+    <form action="/sampleQ" method="GET">
+        <button name='sql' value="sampleQ">SampleQuery</button>
+    </form>
+    {% if 'sampleQ' in arrays %}
+    <table border=1>
+        <tr>
+            {% for colname in arrays['sampleQ']['cols'] %}
+            <th> {{ colname }} </th>
+            {% endfor %}
+        </tr>
+        {% for row in arrays['sampleQ']['res'] %}
+        <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+
+<div>
+    <form action="/insert" method="POST">
+        <button name='sql' value="insert">Insert</button>
+    </form>
+    {% if 'insert' in arrays %}
+    <table border=1>
+        <tr>
+            {% for colname in arrays['sampleQ']['cols'] %}
+            <th> {{ colname }} </th>
+            {% endfor %}
+        </tr>
+        {% for row in arrays['sampleQ']['res'] %}
+        <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>

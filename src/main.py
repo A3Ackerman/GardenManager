@@ -8,20 +8,28 @@ db = 'GardenManager'
 
 app = Flask(__name__, template_folder="")
 
-
-@app.route('/', methods=['GET', 'POST'])
-def hello():
-    display = False
-    if request.method == 'POST':
-        display = True
-        selectQ = "Select plantID, healthstatus from plant;"
-        print(connectAndQuery(selectQ))
-    return render_template('GardenManager.html', query1=display)
+global arrays
 
 
-@app.route('/button1')
-def button1():
-    return render_template('GardenManager.html', query1=True)
+@app.route('/', methods=['GET'])
+def index():
+    return render_template('GardenManager.html', arrays=arrays)
+
+
+@app.route('/sampleQ', methods=['GET'])
+def sampleQuery():
+    selectQ = 'Select * from plant;'
+    arrays['sampleQ'] = {}
+    arrays['sampleQ']['res'] = connectAndQuery(selectQ)
+    colsQ = "select column_name from information_schema.columns where table_name = 'plant';"
+    arrays['sampleQ']['cols'] = ['plantid','variety','genus','species','colour','healthstatus','environmentid']
+    return render_template('GardenManager.html', arrays=arrays)
+
+@app.route('/insert', methods=['POST'])
+def insert():
+    # do things to insert
+    return render_template('GardenManager.html', arrays=arrays)
+
 
 
 def connectAndQuery(sql):
@@ -36,4 +44,5 @@ def connectAndQuery(sql):
 
 
 if __name__ == '__main__':
+    arrays = {}
     app.run(debug=True)

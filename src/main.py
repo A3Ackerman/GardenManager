@@ -21,15 +21,21 @@ def sampleQuery():
     selectQ = 'Select * from plant;'
     arrays['sampleQ'] = {}
     arrays['sampleQ']['res'] = connectAndQuery(selectQ)
-    colsQ = "select column_name from information_schema.columns where table_name = 'plant';"
-    arrays['sampleQ']['cols'] = ['plantid','variety','genus','species','colour','healthstatus','environmentid']
+    arrays['sampleQ']['cols'] = ['plantid', 'variety', 'genus', 'species', 'colour', 'healthstatus', 'environmentid']
     return render_template('GardenManager.html', arrays=arrays)
 
 
-@app.route('/insert', methods=['POST'])
-def insert():
-    # do things to insert
-    return render_template('GardenManager.html', arrays=arrays)
+@app.route('/species', methods=['GET', 'POST'])
+def insertSpecies():
+    if request.method == 'POST':
+        # do insert things
+        return render_template('GardenManager.html', arrays=arrays)
+    else:
+        selectQ = 'Select * from species;'
+        arrays['species'] = {}
+        arrays['species']['res'] = connectAndQuery(selectQ)
+        arrays['species']['cols'] = ['']
+        return render_template('GardenManager.html', arrays=arrays)
 
 
 @app.route('/project')

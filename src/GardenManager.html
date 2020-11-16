@@ -27,17 +27,32 @@
 </div>
 
 <div>
-    <form action="/insert" method="POST">
-        <button name='sql' value="insert">Insert</button>
+    <h2> Insert into Species Table </h2>
+    <form action="/species" method="POST">
+        <input type="text" name="Genus">Genus</input>
+        <input type="text" name="Genus">Species</input>
+        <input type="text" name="Genus">Common Name</input>
+        <input type="text" name="Genus">Plant Family</inputc>
+        <select name="LifeCycle">
+          <optgroup label="">
+            <option value="perennial">perennial</option>
+            <option value="annual">annual</option>
+            <option value="biennial">biennial</option>
+          </optgroup>
+        </select>
+        <button name='insert'>Insert</button>
     </form>
-    {% if 'insert' in arrays %}
+    <form action="/species" method="GET">
+        <button name='species'>Show All Species</button>
+    </form>
+    {% if 'species' in arrays %}
     <table border=1>
         <tr>
-            {% for colname in arrays['sampleQ']['cols'] %}
+            {% for colname in arrays['species']['cols'] %}
             <th> {{ colname }} </th>
             {% endfor %}
         </tr>
-        {% for row in arrays['sampleQ']['res'] %}
+        {% for row in arrays['species']['res'] %}
         <tr>
             {% for cell in row %}
             <td>{{ cell }}</td>

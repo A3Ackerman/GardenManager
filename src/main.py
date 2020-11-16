@@ -6,7 +6,7 @@ pw = 'gardenManager'
 url = 'localhost'
 db = 'GardenManager'
 
-app = Flask(__name__, template_folder="")
+app = Flask(__name__, template_folder='')
 
 global arrays
 
@@ -25,34 +25,42 @@ def sampleQuery():
     return render_template('GardenManager.html', arrays=arrays)
 
 
-@app.route('/species', methods=['GET', 'POST'])
-def insertSpecies():
+@app.route('/pest', methods=['GET', 'POST'])
+def insertPest():
     if request.method == 'POST':
-        # do insert things
+        pestName = request.form['pestName']
+        tpe = request.form['type']
+        desc = request.form['description']
+        control = request.form['control']
+        insertQ = f'Insert Into Pest Values (\'{pestName}\', \'{tpe}\', \'{desc}\', \'{control}\');'
+        connectAndQuery(insertQ, False)
         return render_template('GardenManager.html', arrays=arrays)
     else:
-        selectQ = 'Select * from species;'
-        arrays['species'] = {}
-        arrays['species']['res'] = connectAndQuery(selectQ)
-        arrays['species']['cols'] = ['']
+        selectQ = 'Select * from pest;'
+        arrays['pest'] = {}
+        arrays['pest']['res'] = connectAndQuery(selectQ)
+        arrays['pest']['cols'] = ['Pest Name', 'Type', 'Description', 'Control']
         return render_template('GardenManager.html', arrays=arrays)
 
 
 @app.route('/project')
 def project():
-    plantID = request.args.get("plantID")
+    plantID = request.args.get('plantID')
     projectQ = f'SELECT Variety, Genus, Species, EnvironmentID FROM Plant WHERE PlantID = {plantID};'
     arrays['project'] = {}
     arrays['project']['res'] = connectAndQuery(projectQ)
-    arrays['project']['cols'] = ["variety", "genus", "species", "environmentID"]
+    arrays['project']['cols'] = ['variety', 'genus', 'species', 'environmentID']
     return render_template('GardenManager.html', arrays=arrays)
 
 
-def connectAndQuery(sql):
+def connectAndQuery(sql, fetch=True):
     conn = psycopg2.connect(f'dbname={db} user={user} password={pw} host={url}')
     cur = conn.cursor()
     cur.execute(sql)
-    res = cur.fetchall()
+    if fetch:
+        res = cur.fetchall()
+    else:
+        res = None
     conn.commit()
     cur.close()
     conn.close()

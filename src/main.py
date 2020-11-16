@@ -92,6 +92,21 @@ def showPlantTable():
     arrays['plant']['cols'] = ['Plant ID', 'Variety', 'Genus', 'Species', 'Colour', 'Health Status', 'Environment ID']
     return render_template('GardenManager.html', arrays=arrays)
 
+# Aggregation with Having query
+@app.route('/envMultiPlant')
+def envAtLeastXPlants():
+    numPlants = request.args.get('numPlants')
+    enviroMoreThanQ =   f'WITH NumPlants AS (' \
+                        f' SELECT p.environmentid, COUNT(plantid) AS plant_count FROM plant p ' \
+                        f'GROUP BY p.environmentid HAVING COUNT(plantid) >= \'{numPlants}\' )' \
+                        f'SELECT n.environmentid, e."Location", n.plant_count ' \
+                        f'FROM NumPlants n, environment e '\
+                        f'WHERE n.environmentid = e.environmentid ;'
+    arrays['envMultiPlant'] = {}
+    arrays['envMultiPlant']['res'] = connectAndQuery(enviroMoreThanQ)
+    arrays['envMultiPlant']['cols'] = ['Environment ID', 'Location', 'Number of Plants']
+    return render_template('GardenManager.html', arrays=arrays)
+
 
 def connectAndQuery(sql, fetch=True):
     conn = psycopg2.connect(f'dbname={db} user={user} password={pw} host={url}')

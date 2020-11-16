@@ -24,6 +24,7 @@ def sampleQuery():
     arrays['sampleQ']['cols'] = ['plantid', 'variety', 'genus', 'species', 'colour', 'healthstatus', 'environmentid']
     return render_template('GardenManager.html', arrays=arrays)
 
+
 @app.route('/deletePlant', methods=['GET', 'POST'])
 def deletePlant():
     if request.method == 'POST':

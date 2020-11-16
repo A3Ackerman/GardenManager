@@ -76,7 +76,7 @@ def plant():
             connectAndQuery(deletePlantQ, False)
             return render_template('GardenManager.html', arrays=arrays)
         elif sql == "updatePlant":
-            plantID = request.args.get("plantID")
+            plantID = request.form["plantID"]
             healthStatus = request.form["healthStatus"]
             updatePlantQ = f'UPDATE Plant SET HealthStatus = \'{healthStatus}\' WHERE PlantID = {plantID};'
             connectAndQuery(updatePlantQ, False)

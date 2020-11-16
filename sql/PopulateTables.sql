@@ -60,7 +60,7 @@ INSERT INTO variety (variety,genus,species,plantform,frosttolerant,daystomaturit
 	 ('Canadian early supersweet hybrid corn','Zea','mays','vegetable',false,90,NULL),
 	 ('Glaskin''s Perpetual Rhubarb','Rheum','rhabarbarum','stalks vegetable',true,90,NULL),
 	 ('Spearmint','Mentha','spicata','herb',true,60,NULL),
-	 ('Peppermint','Metha','x piperata','herb',true,60,NULL);
+	 ('Peppermint','Mentha','x piperata','herb',true,60,NULL);
 
 -- Drainage
 INSERT INTO drainage (soiltype,drainage) VALUES
@@ -418,7 +418,7 @@ INSERT INTO plant (plantid,variety,genus,species,colour,healthstatus,environment
 	 (10,'Glaskin''s Perpetual Rhubarb','Rheum','rhabarbarum','','Good',11),
 	 (11,'Fresca strawberries','Fragaria','vesca','','Good',12),
 	 (12,'Spearmint','Mentha','spicata','','Good',8),
-	 (13,'Peppermint','Metha','x piperata','','Good',8);
+	 (13,'Peppermint','Mentha','x piperata','','Good',8);
 
 -- PestSighting 
 INSERT INTO pestsighting (sightingid,pestname,severity,"Date") VALUES
@@ -512,22 +512,22 @@ INSERT INTO thrivesin (variety,genus,species,sunlight,nutrients,soiltype,hydrati
 	 ('Glaskin''s Perpetual Rhubarb','Rheum','rhabarbarum','Partial sun','Fertilized','Clay','Moist'),
 	 ('Fresca strawberries','Fragaria','vesca','Partial sun','Fertilized','Sandy','Moist'),
 	 ('Spearmint','Mentha','spicata','Full sun','Fertilized','Loam','Moist'),
-	 ('Peppermint','Metha','x piperata','Full sun','Fertilized','Loam','Moist'),
+	 ('Peppermint','Mentha','x piperata','Full sun','Fertilized','Loam','Moist'),
 	 ('Spearmint','Mentha','spicata','Partial sun','Fertilized','Loam','Moist'),
-	 ('Peppermint','Metha','x piperata','Partial sun','Fertilized','Loam','Moist'),
+	 ('Peppermint','Mentha','x piperata','Partial sun','Fertilized','Loam','Moist'),
 	 ('Spearmint','Mentha','spicata','Full sun','Depleted','Loam','Moist'),
-	 ('Peppermint','Metha','x piperata','Full sun','Depleted','Loam','Moist');
+	 ('Peppermint','Mentha','x piperata','Full sun','Depleted','Loam','Moist');
 INSERT INTO thrivesin (variety,genus,species,sunlight,nutrients,soiltype,hydration) VALUES
 	 ('Spearmint','Mentha','spicata','Partial sun','Depleted','Loam','Moist'),
-	 ('Peppermint','Metha','x piperata','Partial sun','Depleted','Loam','Moist'),
+	 ('Peppermint','Mentha','x piperata','Partial sun','Depleted','Loam','Moist'),
 	 ('Spearmint','Mentha','spicata','Full sun','Fertilized','Loam','Dry'),
-	 ('Peppermint','Metha','x piperata','Full sun','Fertilized','Loam','Dry'),
+	 ('Peppermint','Mentha','x piperata','Full sun','Fertilized','Loam','Dry'),
 	 ('Spearmint','Mentha','spicata','Partial sun','Fertilized','Loam','Dry'),
-	 ('Peppermint','Metha','x piperata','Partial sun','Fertilized','Loam','Dry'),
+	 ('Peppermint','Mentha','x piperata','Partial sun','Fertilized','Loam','Dry'),
 	 ('Spearmint','Mentha','spicata','Full sun','Depleted','Loam','Dry'),
-	 ('Peppermint','Metha','x piperata','Full sun','Depleted','Loam','Dry'),
+	 ('Peppermint','Mentha','x piperata','Full sun','Depleted','Loam','Dry'),
 	 ('Spearmint','Mentha','spicata','Partial sun','Depleted','Loam','Dry'),
-	 ('Peppermint','Metha','x piperata','Partial sun','Depleted','Loam','Dry');
+	 ('Peppermint','Mentha','x piperata','Partial sun','Depleted','Loam','Dry');
 
 -- Has
 INSERT INTO has (plantid,sightingid) VALUES

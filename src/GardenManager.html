@@ -37,12 +37,11 @@
         <label for="type">Type:</label>
         <input type="text" id="type" name="type">
         <label for="control">Control:</label>
-        <input type="text" id="control" name="control"><br>
-        <label for="description">Description:</label><br>
-        <textarea type="text" id="description" name="description" rows="10" cols="30"></textarea>
+        <textarea type="text" id="control" name="control"></textarea>
+        <label for="description">Description:</label>
+        <textarea type="text" id="description" name="description"></textarea>
         <button name='sql' value='insert'>Insert</button>
     </form>
-
     <form action="/pest" method="GET">
         <button name=sql value="show">Show All Pests</button>
     </form>
@@ -112,7 +111,7 @@
     <h2>Project Variety, Genus, Species and EnvironmentID by PlantID</h2>
     <form id="project" action="/project" method="GET">
         <label for="projectPlantID">PlantID:</label>
-        <input type="text" id="projectPlantID" name="projectPlantID"><br><br>
+        <input type="text" id="projectPlantID" name="projectPlantID"><br>
         <button name='sql' value="project">Project</button>
     </form>
     {% if 'project' in arrays %}

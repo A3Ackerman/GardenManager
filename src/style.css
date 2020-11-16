@@ -1,5 +1,5 @@
-/*Thanks to Manuel Pinto*/
 html {
+	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 	background: linear-gradient(-45deg,
 	#214747,
 	#41957E,
@@ -9,6 +9,21 @@ html {
 	animation: gradient 15s ease infinite;
 }
 
+form {
+	display: flex;
+	justify-contnet: flex-start;
+	align-items: flex-start;
+}
+
+input {
+	margin: 0 5px;
+}
+
+textarea {
+	margin: 0 5px;
+}
+
+/*Thanks to Manuel Pinto*/
 @keyframes gradient {
 	0% {
 		background-position: 0% 50%;

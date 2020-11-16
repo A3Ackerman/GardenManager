@@ -35,7 +35,7 @@ INSERT INTO species (genus,species,commonname,lifecycle) VALUES
 INSERT INTO species (genus,species,commonname,lifecycle) VALUES
 	 ('Fragaria','vesca','Strawberry','Perennial'),
 	 ('Beta','vulgaris','Beet','Annual'),
-	 ('Capsicum','annuum','Capsicum','Annual'),
+	 ('Capsicum','annuum','Bell pepper','Annual'),
 	 ('Rheum','rhabarbarum','Rhubarb','Perennial'),
 	 ('Brassica','oleracea','Cabbage','Annual'),
 	 ('Zea','mays','Corn','Annual'),
@@ -60,7 +60,24 @@ INSERT INTO variety (variety,genus,species,plantform,frosttolerant,daystomaturit
 	 ('Canadian early supersweet hybrid corn','Zea','mays','vegetable',false,90,NULL),
 	 ('Glaskin''s Perpetual Rhubarb','Rheum','rhabarbarum','stalks vegetable',true,90,NULL),
 	 ('Spearmint','Mentha','spicata','herb',true,60,NULL),
-	 ('Peppermint','Mentha','x piperata','herb',true,60,NULL);
+	 ('Peppermint','Mentha','x piperata','herb',true,60,NULL),
+	 ('Sungold cherry tomato','Solanum','lycopersicum','vine',false,65,NULL),
+	 ('Common lily of the valley','Convallaria','majalis','flower',true,NULL,'Early spring'),
+	 ('Olympian','Cucumis','sativa','vine',false,65,NULL),
+	 ('Dwarf Munstead','Lavendula','angustifolia','flower',true,NULL,'Spring'),
+	 ('Avalanche snow pea','Pisum','sativum','vine',false,60,''),
+	 ('Winter field pea','Pisum','sativum','vine',true,60,NULL);
+INSERT INTO variety (variety,genus,species,plantform,frosttolerant,daystomaturity,bloomperiod) VALUES
+	 ('Masai bush bean','Phaseolus','vulgaris','bush',true,55,NULL),
+	 ('Gold rush','Phaseolus','vulgaris','vine',false,58,NULL),
+	 ('Beefsteak','Solanum','lycopersicum','bush',false,60,NULL),
+	 ('Italian softneck','Allium','sativum','root vegetable',true,75,NULL),
+	 ('Walla walla','Allium','cepa','root vegetable',true,150,NULL),
+	 ('Chesnok red','Allium','sativum','root vegetable',true,110,NULL),
+	 ('California wonder','Capsicum','annuum','vegetable',false,75,NULL),
+	 ('Olympia spinach','Spinacia','oleracea','leaf vegetable',false,45,NULL),
+	 ('Jalapeno','Capsicum','annuum','vegetable',false,70,NULL),
+	 ('Renegade','Spinacia','oleracea','leaf vegetable',false,45,NULL);
 
 -- Drainage
 INSERT INTO drainage (soiltype,drainage) VALUES
@@ -404,7 +421,6 @@ INSERT INTO maintains (activityid,environmentid) VALUES
 
 -- Plants
 INSERT INTO plant (plantid,variety,genus,species,colour,healthstatus,environmentid) VALUES
-	 (14,'Jewel mix','Tropaeolum','majus','Mix','Good',1),
 	 (1,'Prizehead','Lactuca','sativa','','Good',1),
 	 (2,'Scarlet nantes','Daucus','carota','','Fair',2),
 	 (3,'Detroit dark red','Beta','vulgaris','','Good',3),
@@ -418,7 +434,15 @@ INSERT INTO plant (plantid,variety,genus,species,colour,healthstatus,environment
 	 (10,'Glaskin''s Perpetual Rhubarb','Rheum','rhabarbarum','','Good',11),
 	 (11,'Fresca strawberries','Fragaria','vesca','','Good',12),
 	 (12,'Spearmint','Mentha','spicata','','Good',8),
-	 (13,'Peppermint','Mentha','x piperata','','Good',8);
+	 (13,'Peppermint','Mentha','x piperata','','Good',8),
+	 (14,'Jewel mix','Tropaeolum','majus','Mix','Good',1),
+	 (15,'Detroit dark red','Beta','vulgaris','Green','Fair',2),
+	 (16,'Broccoli','Brassica','oleracea','Green','Good',3),
+	 (17,'Prizehead','Lactuca','sativa','Green','Good',3),
+	 (18,'Jewel mix','Tropaeolum','majus','Mix','Good',6),
+	 (19,'Olympian','Cucumis','sativa','Green','Fair',6),
+	 (20,'Walla walla','Allium','cepa','Gold','Good',11),
+	 (21,'Chesnok red','Allium','sativum','Red','Fair',11);
 
 -- PestSighting 
 INSERT INTO pestsighting (sightingid,pestname,severity,"Date") VALUES
@@ -528,6 +552,25 @@ INSERT INTO thrivesin (variety,genus,species,sunlight,nutrients,soiltype,hydrati
 	 ('Peppermint','Mentha','x piperata','Full sun','Depleted','Loam','Dry'),
 	 ('Spearmint','Mentha','spicata','Partial sun','Depleted','Loam','Dry'),
 	 ('Peppermint','Mentha','x piperata','Partial sun','Depleted','Loam','Dry');
+INSERT INTO thrivesin (variety,genus,species,sunlight,nutrients,soiltype,hydration) VALUES
+	 ('California wonder','Capsicum','annuum','Full sun','Fertilized','Sandy','Moist'),
+	 ('Olympia spinach','Spinacia','oleracea','Partial sun','Fertilized','Sandy','Moist'),
+	 ('Italian softneck','Allium','sativum','Partial sun','Fertilized','Sandy','Dry'),
+	 ('Masai bush bean','Phaseolus','vulgaris','Full sun','Depleted','Silt','Moist'),
+	 ('Chesnok red','Allium','sativum','Partial sun','Fertilized','Sandy','Dry'),
+	 ('Jalapeno','Capsicum','annuum','Full sun','Fertilized','Loam','Moist'),
+	 ('Beefsteak','Solanum','lycopersicum','Full sun','Fertilized','Sandy','Moist'),
+	 ('Sungold cherry tomato','Solanum','lycopersicum','Full sun','Fertilized','Sandy','Moist'),
+	 ('Common lily of the valley','Convallaria','majalis','Dappled sun','Fertilized','Loam','Moist'),
+	 ('Jewel mix','Tropaeolum','majus','Partial sun','Fertilized','Silt','Moist');
+INSERT INTO thrivesin (variety,genus,species,sunlight,nutrients,soiltype,hydration) VALUES
+	 ('Avalanche snow pea','Pisum','sativum','Full sun','Depleted','Sandy','Moist'),
+	 ('Dwarf Munstead','Lavendula','angustifolia','Partial sun','Fertilized','Clay','Dry'),
+	 ('Olympian','Cucumis','sativa','Full sun','Fertilized','Loam','Moist'),
+	 ('Winter field pea','Pisum','sativum','Partial sun','Depleted','Sandy','Moist'),
+	 ('Gold rush','Phaseolus','vulgaris','Partial sun','Depleted','Sandy','Moist'),
+	 ('Renegade','Spinacia','oleracea','Partial sun','Fertilized','Sandy','Moist'),
+	 ('Walla walla','Allium','cepa','Partial sun','Fertilized','Sandy','Moist');
 
 -- Has
 INSERT INTO has (plantid,sightingid) VALUES

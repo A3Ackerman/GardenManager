@@ -7,6 +7,7 @@ url = 'localhost'
 db = 'GardenManager'
 
 app = Flask(__name__, template_folder='')
+app.static_folder = 'static'
 
 global arrays
 
@@ -31,7 +32,7 @@ def deletePlant():
         plantIDtoDelete = request.form["plantID"]
         print(f'DELETE FROM plant WHERE plantid={plantIDtoDelete};')
         deletePlantQ = f'DELETE FROM plant WHERE plantid={plantIDtoDelete};'
-        connectAndQuery(deletePlantQ)
+        connectAndQuery(deletePlantQ, False)
         return render_template('GardenManager.html', arrays=arrays)
     else:
         selectPlants = 'Select * from plant order by plantid;'

@@ -1,5 +1,7 @@
 <title>GardenManager</title>
-
+<style type="text/css">
+{% include "style.css" %}
+</style>
 <div>
     <h1>Hello, this is the GardenManager!</h1>
 </div>
@@ -99,7 +101,7 @@
 
 <div>
     <hr>
-    <h3>Projects the Variety, Genus, Species and EnvironmentID of specific plants in the garden</h3>
+    <h2>Project Variety, Genus, Species and EnvironmentID by PlantID</h2>
     <form id="project" action="/project" method="GET">
         <label for="plantID">PlantID:</label>
         <input type="text" id="plantID" name="plantID"><br><br>

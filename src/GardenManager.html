@@ -27,6 +27,7 @@
 </div>
 
 <div>
+    <hr>
     <h2> Insert into Species Table </h2>
     <form action="/species" method="POST">
         <input type="text" name="Genus">Genus</input>
@@ -65,8 +66,8 @@
 
 <div>
     <hr>
+    <h3>Projects the Variety, Genus, Species and EnvironmentID of specific plants in the garden</h3>
     <form id="project" action="/project" method="GET">
-        <b>Projects the Variety, Genus, Species and EnvironmentID of specific plants in the garden</b><br>
         <label for="plantID">PlantID:</label>
         <input type="text" id="plantID" name="plantID"><br><br>
         <button name='sql' value="project">Project</button>

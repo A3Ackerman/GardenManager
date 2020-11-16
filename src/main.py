@@ -24,14 +24,17 @@ def sampleQuery():
     arrays['sampleQ']['cols'] = ['plantid', 'variety', 'genus', 'species', 'colour', 'healthstatus', 'environmentid']
     return render_template('GardenManager.html', arrays=arrays)
 
-@app.route('/deletePlant', methods=['GET'])
+@app.route('/deletePlant', methods=['GET', 'POST'])
 def deletePlant():
-    plantIDtoDelete = request.args.get("plantID")
-    selectQ = 'DELETE FROM plant WHERE plantid='+ plantIDtoDelete +';'
-    arrays['sampleQ'] = {}
-    arrays['sampleQ']['res'] = connectAndQuery(selectQ)
-    arrays['sampleQ']['cols'] = ['plantid', 'variety', 'genus', 'species', 'colour', 'healthstatus', 'environmentid']
-    return render_template('GardenManager.html', arrays=arrays)
+    if request.method == 'POST':
+        return render_template('GardenManager.html', arrays=arrays)
+    else:
+        plantIDtoDelete = request.args.get("plantID")
+        selectQ = 'DELETE FROM plant WHERE plantid='+ plantIDtoDelete +';'
+        arrays['sampleQ'] = {}
+        arrays['sampleQ']['res'] = connectAndQuery(selectQ)
+        arrays['sampleQ']['cols'] = ['plantid', 'variety', 'genus', 'species', 'colour', 'healthstatus', 'environmentid']
+        return render_template('GardenManager.html', arrays=arrays)
 
 
 @app.route('/species', methods=['GET', 'POST'])

@@ -66,20 +66,28 @@
 
 <div>
     <hr>
-    <h2> Delete Plant by PlantID </h2>
-    <form action="/deletePlant" method="POST">
-        <input type="text" name="plantID">Plant ID</input>
-{#        <select name="Plant ID Dropdown">#}
-{#          <optgroup label="PlantIDDD">#}
-{#              {% for row in arrays['delPlant']['plantId'] %}#}
-{#                <option value=row>row</option>#}
-{#              {% endfor %}#}
-{#          </optgroup>#}
-{#        </select>#}
-        <button name='deletePlant'>Delete Plant</button>
+    <h2> Delete or Update Plant by PlantID </h2>
+    <form action="/plant" method="POST">
+        <label for="updatePlantID">PlantID:</label>
+        <input type="text" name="plantID"></input>
+<!--{#        <select name="Plant ID Dropdown">#}-->
+<!--{#          <optgroup label="PlantIDDD">#}-->
+<!--{#              {% for row in arrays['delPlant']['plantId'] %}#}-->
+<!--{#                <option value=row>row</option>#}-->
+<!--{#              {% endfor %}#}-->
+<!--{#          </optgroup>#}-->
+<!--{#        </select>#}-->
+        <button name='sql' value='deletePlant'>Delete Plant</button>
     </form>
-    <form action="/deletePlant" method="GET">
-        <button name='deletePlant'>Show All Plants</button>
+    <form action="/plant" method="PUT">
+        <label for="updatePlantID">PlantID:</label>
+        <input type="text" id= "updatePlantID" name="plantID">
+        <label for="updateHealthStatus">Health Status:</label>
+        <input type="text" id= "updateHealthStatus" name="healthStatus">
+        <button name='sql' value='updatePlant'>Update Plant</button>
+    </form>
+    <form action="/plant" method="GET">
+        <button name="sql" value="showPlants">Show All Plants</button>
     </form>
     {% if 'plant' in arrays %}
     <table border=1>
@@ -103,8 +111,8 @@
     <hr>
     <h2>Project Variety, Genus, Species and EnvironmentID by PlantID</h2>
     <form id="project" action="/project" method="GET">
-        <label for="plantID">PlantID:</label>
-        <input type="text" id="plantID" name="plantID"><br><br>
+        <label for="projectPlantID">PlantID:</label>
+        <input type="text" id="projectPlantID" name="projectPlantID"><br><br>
         <button name='sql' value="project">Project</button>
     </form>
     {% if 'project' in arrays %}

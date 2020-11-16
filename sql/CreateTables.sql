@@ -83,16 +83,16 @@ CREATE TABLE Affects (
 	PlantID			INTEGER,
 	ActivityID		INTEGER,
 	PRIMARY KEY (PlantID, ActivityID),
-	FOREIGN KEY (PlantID) REFERENCES Plant,
-	FOREIGN KEY (ActivityID) REFERENCES Activity
+	FOREIGN KEY (PlantID) REFERENCES Plant ON DELETE CASCADE,
+	FOREIGN KEY (ActivityID) REFERENCES Activity ON DELETE CASCADE
 );
 
 CREATE TABLE Maintains (
 	ActivityID		INTEGER,
 	EnvironmentID	INTEGER,
 	PRIMARY KEY (ActivityID, EnvironmentID),
-	FOREIGN KEY (EnvironmentID) REFERENCES Environment,
-	FOREIGN KEY (ActivityID) REFERENCES Activity
+	FOREIGN KEY (EnvironmentID) REFERENCES Environment ON DELETE CASCADE,
+	FOREIGN KEY (ActivityID) REFERENCES Activity ON DELETE CASCADE
 );
 
 CREATE TABLE Drainage ( 
@@ -107,7 +107,7 @@ CREATE TABLE "Condition" (
 	SoilType		enum_SoilType,
 	Hydration		enum_Hydration,
 	PRIMARY KEY (Sunlight, Nutrients, SoilType, Hydration),
-	FOREIGN KEY (SoilType) REFERENCES Drainage
+	FOREIGN KEY (SoilType) REFERENCES Drainage ON DELETE CASCADE
 );
 
 CREATE TABLE Environment_Target (
@@ -148,7 +148,7 @@ CREATE TABLE PestSighting (
 	Severity		CHAR(20),
 	"Date"			DATE,
 	PRIMARY KEY (SightingID),
-	FOREIGN KEY (PestName) REFERENCES Pest
+	FOREIGN KEY (PestName) REFERENCES Pest 
 );
 
 CREATE TABLE IsSusceptibleTo ( 
@@ -178,8 +178,8 @@ CREATE TABLE Has (
 	PlantID			INTEGER,
 	SightingID		INTEGER,
 	PRIMARY KEY (PlantID, SightingID),
-	FOREIGN KEY (PlantID) REFERENCES Plant, 
-	FOREIGN KEY (SightingID) REFERENCES PestSighting
+	FOREIGN KEY (PlantID) REFERENCES Plant  ON DELETE CASCADE, 
+	FOREIGN KEY (SightingID) REFERENCES PestSighting  ON DELETE CASCADE
 );
 
 

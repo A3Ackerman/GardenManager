@@ -28,9 +28,9 @@ def sampleQuery():
 def deletePlant():
     if request.method == 'POST':
         plantIDtoDelete = request.args.get("plantID")
-        deletePlantQ = 'DELETE FROM plant WHERE plantid='+ plantIDtoDelete +';'
-        arrays['delPlant'] = {}
-        arrays['delPlant']['plantid'] = connectAndQuery(selectQ)
+        print(f'DELETE FROM plant WHERE plantid={plantIDtoDelete};')
+        deletePlantQ = f'DELETE FROM plant WHERE plantid={plantIDtoDelete};'
+        connectAndQuery(deletePlantQ)
         return render_template('GardenManager.html', arrays=arrays)
     else:
         selectPlants = 'Select * from plant order by plantid;'

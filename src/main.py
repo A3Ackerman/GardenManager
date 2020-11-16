@@ -69,20 +69,18 @@ def plant():
     #we run into some issues here with deleting from the plant table.
     # also just found out that forms only work with get and post requests
     if request.method == 'POST':
-        plantIDtoDelete = request.form["plantID"]
-        deletePlantQ = f'DELETE FROM plant WHERE plantid={plantIDtoDelete};'
-        connectAndQuery(deletePlantQ, False)
-        return render_template('GardenManager.html', arrays=arrays)
-    elif request.method == 'PUT':
-        print("got here")
-        plantID = request.args.get("plantID")
-        healthStatus = request.form["healthStatus"]
-        print(plantID, healthStatus)
-        updatePlantQ = "UPDATE Plant " \
-                       "SET Variety = "", Genus = "", Species = "",Colour = "", HealthStatus = "", EnvironmentID = 0 " \
-                       "WHERE PlantID = 0;"
-        #connectAndQuery(updatePlantQ, False)
-        return render_template('GardenManager.html', arrays=arrays)
+        sql = request.form['sql']
+        if sql == "deletePlant":
+            plantIDtoDelete = request.form["plantID"]
+            deletePlantQ = f'DELETE FROM plant WHERE plantid={plantIDtoDelete};'
+            connectAndQuery(deletePlantQ, False)
+            return render_template('GardenManager.html', arrays=arrays)
+        elif sql == "updatePlant":
+            plantID = request.args.get("plantID")
+            healthStatus = request.form["healthStatus"]
+            updatePlantQ = "UPDATE Plant SET HealthStatus = '{healthStatus} \' WHERE PlantID = {plantID};"
+            connectAndQuery(updatePlantQ, False)
+            return render_template('GardenManager.html', arrays=arrays)
     else:
         return showPlantTable()
 

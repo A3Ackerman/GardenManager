@@ -132,3 +132,29 @@
     </table>
     {% endif %}
 </div>
+
+<div>
+    <hr>
+    <h2>Find Environments With At Least _ Plants</h2>
+    <form id="enviroMultiPlant" action="/envMultiPlant" method="GET">
+        <label for="enviroMultiPlant">Min Number of Plants</label>
+        <input type="text" id="minNumberPlants" name="numPlants"><br><br>
+        <button name='sql' value="envMultiPlant">Find Environments</button>
+    </form>
+    {% if 'envMultiPlant' in arrays %}
+    <table border=1>
+        <tr>
+            {% for colname in arrays['envMultiPlant']['cols'] %}
+            <th> {{ colname }} </th>
+            {% endfor %}
+        </tr>
+        {% for row in arrays['envMultiPlant']['res'] %}
+        <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>

@@ -64,6 +64,41 @@
 
 <div>
     <hr>
+    <h2> Delete Plant by PlantID </h2>
+    <form action="/deletePlant" method="POST">
+        <input type="PlantID">Plant ID</input>
+{#        <select name="Plant ID Dropdown">#}
+{#          <optgroup label="PlantIDDD">#}
+{#              {% for row in arrays['delPlant']['plantId'] %}#}
+{#                <option value=row>row</option>#}
+{#              {% endfor %}#}
+{#          </optgroup>#}
+{#        </select>#}
+        <button name='deletePlant'>Delete Plant</button>
+    </form>
+    <form action="/deletePlant" method="GET">
+        <button name='deletePlant'>Show All Plants</button>
+    </form>
+    {% if 'plant' in arrays %}
+    <table border=1>
+        <tr>
+            {% for colname in arrays['plant']['cols'] %}
+            <th> {{ colname }} </th>
+            {% endfor %}
+        </tr>
+        {% for row in arrays['plant']['res'] %}
+        <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+
+<div>
+    <hr>
     <h3>Projects the Variety, Genus, Species and EnvironmentID of specific plants in the garden</h3>
     <form id="project" action="/project" method="GET">
         <label for="plantID">PlantID:</label>

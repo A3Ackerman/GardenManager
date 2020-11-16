@@ -24,6 +24,21 @@ def sampleQuery():
     arrays['sampleQ']['cols'] = ['plantid', 'variety', 'genus', 'species', 'colour', 'healthstatus', 'environmentid']
     return render_template('GardenManager.html', arrays=arrays)
 
+@app.route('/deletePlant', methods=['GET', 'POST'])
+def deletePlant():
+    if request.method == 'POST':
+        plantIDtoDelete = request.args.get("plantID")
+        deletePlantQ = 'DELETE FROM plant WHERE plantid='+ plantIDtoDelete +';'
+        arrays['delPlant'] = {}
+        arrays['delPlant']['plantid'] = connectAndQuery(selectQ)
+        return render_template('GardenManager.html', arrays=arrays)
+    else:
+        selectPlants = 'Select * from plant order by plantid;'
+        arrays['plant'] = {}
+        arrays['plant']['res'] = connectAndQuery(selectPlants)
+        arrays['plant']['cols'] = ['Plant ID', 'Variety', 'Genus', 'Species', 'Colour', 'Health Status', 'Environment ID']
+        return render_template('GardenManager.html', arrays=arrays)
+
 
 @app.route('/pest', methods=['GET', 'POST'])
 def insertPest():

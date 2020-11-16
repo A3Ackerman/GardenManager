@@ -353,7 +353,9 @@ INSERT INTO activity (activityid,activitytype,"date") VALUES
 	 (7,'Water','2020-07-07'),
 	 (8,'Water','2020-07-08'),
 	 (9,'Water','2020-07-09'),
-	 (10,'Fertilize','2020-07-10');
+	 (10,'Fertilize','2020-07-10'),
+	 (11,'Water','2020-07-03'),
+	 (12,'Fertilize','2020-07-08');
 
 -- Maintains 
 INSERT INTO maintains (activityid,environmentid) VALUES
@@ -383,9 +385,23 @@ INSERT INTO maintains (activityid,environmentid) VALUES
 	 (7,2),
 	 (7,4),
 	 (7,8),
+	 (8,1),
+	 (8,2),
+	 (8,3),
+	 (8,4),
+	 (8,5),
+	 (8,6),
+	 (8,7),
 	 (8,8),
+	 (8,9),
+	 (8,10),
+	 (8,11),
+	 (8,12),
 	 (9,9),
-	 (10,10);
+	 (10,10),
+	 (11,5),
+	 (11,2),
+	 (12,6);
 
 -- Plants
 INSERT INTO plant (plantid,variety,genus,species,colour,healthstatus,environmentid) VALUES
@@ -412,7 +428,8 @@ INSERT INTO pestsighting (sightingid,pestname,severity,"Date") VALUES
 	 (3,'Leafminer','Moderate','2020-07-17'),
 	 (4,'Mosaic virus','Severe','2020-07-18'),
 	 (5,'Rust','Moderate','2020-07-19'),
-	 (6,'Slug','Severe','2020-07-20');
+	 (6,'Slug','Severe','2020-07-20'),
+	 (7,'Cabbage aphid','Mild','2020-07-21');
 
 -- Environment_Target 
 INSERT INTO environment_target (environmentid,sunlight,nutrients,soiltype,hydration) VALUES
@@ -522,4 +539,6 @@ INSERT INTO has (plantid,sightingid) VALUES
 	 (2,5),
 	 (11,6),
 	 (3,1),
-	 (8,1);
+	 (8,1),
+	 (3,7),
+	 (8,7);

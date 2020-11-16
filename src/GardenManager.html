@@ -47,3 +47,29 @@
     </table>
     {% endif %}
 </div>
+
+<div>
+    <hr>
+    <form id="project" action="/project" method="GET">
+        <b>Projects the Variety, Genus, Species and EnvironmentID of specific plants in the garden</b><br>
+        <label for="plantID">PlantID:</label>
+        <input type="text" id="plantID" name="plantID"><br><br>
+        <button name='sql' value="project">Project</button>
+    </form>
+    {% if 'project' in arrays %}
+    <table border=1>
+        <tr>
+            {% for colname in arrays['project']['cols'] %}
+            <th> {{ colname }} </th>
+            {% endfor %}
+        </tr>
+        {% for row in arrays['project']['res'] %}
+        <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>

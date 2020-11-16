@@ -3,7 +3,7 @@ import psycopg2
 
 user = 'GardenManager'
 pw = 'gardenManager'
-url = '0.0.0.0'
+url = 'localhost'
 db = 'GardenManager'
 
 app = Flask(__name__, template_folder="")
@@ -25,11 +25,21 @@ def sampleQuery():
     arrays['sampleQ']['cols'] = ['plantid','variety','genus','species','colour','healthstatus','environmentid']
     return render_template('GardenManager.html', arrays=arrays)
 
+
 @app.route('/insert', methods=['POST'])
 def insert():
     # do things to insert
     return render_template('GardenManager.html', arrays=arrays)
 
+
+@app.route('/project')
+def project():
+    plantID = request.args.get("plantID")
+    projectQ = f'SELECT Variety, Genus, Species, EnvironmentID FROM Plant WHERE PlantID = {plantID};'
+    arrays['project'] = {}
+    arrays['project']['res'] = connectAndQuery(projectQ)
+    arrays['project']['cols'] = ["variety", "genus", "species", "environmentID"]
+    return render_template('GardenManager.html', arrays=arrays)
 
 
 def connectAndQuery(sql):

@@ -12,7 +12,6 @@ INSERT INTO plantfamily (genus,plantfamily) VALUES
 	 ('Lavendula','Lamiaceae');
 INSERT INTO plantfamily (genus,plantfamily) VALUES
 	 ('Mentha','Lamiaceae'),
-	 ('Metha','Lamiaceae'),
 	 ('Phaseolus','Leguminosae'),
 	 ('Pisum','Fabaceae'),
 	 ('Rheum','Polygonaceae'),
@@ -42,7 +41,7 @@ INSERT INTO species (genus,species,commonname,lifecycle) VALUES
 	 ('Zea','mays','Corn','Annual'),
 	 ('Spinacia','oleracea','Spinach','Annual'),
 	 ('Mentha','spicata','Spearmint','Perennial'),
-	 ('Metha','x piperata','Peppermint','Perennial'),
+	 ('Mentha','x piperata','Peppermint','Perennial'),
 	 ('Tropaeolum','majus','Garden Nasturtium','Annual');
 
 -- Variety

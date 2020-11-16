@@ -27,7 +27,7 @@ def sampleQuery():
 @app.route('/deletePlant', methods=['GET', 'POST'])
 def deletePlant():
     if request.method == 'POST':
-        plantIDtoDelete = request.args.get("plantID")
+        plantIDtoDelete = request.form["plantID"]
         print(f'DELETE FROM plant WHERE plantid={plantIDtoDelete};')
         deletePlantQ = f'DELETE FROM plant WHERE plantid={plantIDtoDelete};'
         connectAndQuery(deletePlantQ)

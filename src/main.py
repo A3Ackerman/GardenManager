@@ -107,6 +107,23 @@ def envAtLeastXPlants():
     arrays['envMultiPlant']['cols'] = ['Environment ID', 'Location', 'Number of Plants']
     return render_template('GardenManager.html', arrays=arrays)
 
+@app.route('/division', methods=['GET'])
+def division():
+    divisionQ = '''WITH Waterings AS (
+                    SELECT a.activityid, m.environmentid 
+                    FROM activity a, maintains m
+                    WHERE a.activityid = m.activityid AND a.activitytype = 'Water'
+                ) SELECT a2."date" FROM activity a2
+                    WHERE NOT EXISTS 
+                      ((SELECT e.environmentid FROM environment e)
+                        EXCEPT 
+                        (SELECT w.environmentid FROM Waterings w
+                         WHERE w.activityid = a2.activityid))
+                    ORDER BY a2."date" ASC;'''
+    arrays['division'] = {}
+    arrays['division']['res'] = connectAndQuery(divisionQ)
+    arrays['division']['cols'] = ['Date']
+    return render_template('GardenManager.html', arrays=arrays)
 
 # select query
 @app.route('/pots')

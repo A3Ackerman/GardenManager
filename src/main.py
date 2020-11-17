@@ -92,12 +92,12 @@ def showPlantTable():
     return render_template('GardenManager.html', arrays=arrays)
 
 
-# Aggregation with Having query
+# Aggregation with having: find environments that have at least <input> number of plants
 @app.route('/envMultiPlant')
 def envAtLeastXPlants():
     numPlants = request.args.get('numPlants')
-    enviroMoreThanQ =   f'WITH NumPlants AS (' \
-                        f' SELECT p.environmentid, COUNT(plantid) AS plant_count FROM plant p ' \
+    enviroMoreThanQ =   f'WITH NumPlants AS ( ' \
+                        f'SELECT p.environmentid, COUNT(plantid) AS plant_count FROM plant p ' \
                         f'GROUP BY p.environmentid HAVING COUNT(plantid) >= \'{numPlants}\' )' \
                         f'SELECT n.environmentid, e."Location", n.plant_count ' \
                         f'FROM NumPlants n, environment e '\
@@ -105,6 +105,42 @@ def envAtLeastXPlants():
     arrays['envMultiPlant'] = {}
     arrays['envMultiPlant']['res'] = connectAndQuery(enviroMoreThanQ)
     arrays['envMultiPlant']['cols'] = ['Environment ID', 'Location', 'Number of Plants']
+    return render_template('GardenManager.html', arrays=arrays)
+
+
+# Division query - find all dates where all of the environments were watered
+@app.route('/division', methods=['GET'])
+def division():
+    divisionQ = '''WITH Waterings AS (
+                    SELECT a.activityid, m.environmentid 
+                    FROM activity a, maintains m
+                    WHERE a.activityid = m.activityid AND a.activitytype = 'Water'
+                ) SELECT a2."date" FROM activity a2
+                    WHERE NOT EXISTS 
+                      ((SELECT e.environmentid FROM environment e)
+                        EXCEPT 
+                        (SELECT w.environmentid FROM Waterings w
+                         WHERE w.activityid = a2.activityid))
+                    ORDER BY a2."date" ASC;'''
+    arrays['division'] = {}
+    arrays['division']['res'] = connectAndQuery(divisionQ)
+    arrays['division']['cols'] = ['Date']
+    return render_template('GardenManager.html', arrays=arrays)
+
+
+# select query
+@app.route('/pots')
+def select_pots():
+    op = request.args.get('op')
+    radius = request.args.get('radius', None)
+    colour = request.args.get('colour', None)
+    if radius and colour:
+        potsQ = f'select * from pot where "Radius" {op} {radius} and colour = \'{colour}\''
+    else:
+        potsQ = 'select * from pot'
+    arrays['pots'] = {}
+    arrays['pots']['cols'] = ['Environment ID', 'Colour', 'Radius', 'Height']
+    arrays['pots']['res'] = connectAndQuery(potsQ)
     return render_template('GardenManager.html', arrays=arrays)
 
 
@@ -116,7 +152,6 @@ def nestedAgg():
                      f'WHERE vc.num_plants = ' \
                      f'(SELECT MAX(temp.num_plants) ' \
                      f'FROM (SELECT p.species, COUNT(plantid) AS num_plants FROM plant p GROUP BY p.species) AS temp)'
-        print(nestedAgg)
         arrays['nestedAgg'] = {}
         arrays['nestedAgg']['res'] = connectAndQuery(nestedAggQ)
         arrays['nestedAgg']['cols'] = ['Species', 'Number of Plants']

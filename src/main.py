@@ -92,12 +92,12 @@ def showPlantTable():
     arrays['plant']['cols'] = ['Plant ID', 'Variety', 'Genus', 'Species', 'Colour', 'Health Status', 'Environment ID']
     return render_template('GardenManager.html', arrays=arrays)
 
-# Aggregation with Having query
+# Aggregation with having: find environments that have at least <input> number of plants
 @app.route('/envMultiPlant')
 def envAtLeastXPlants():
     numPlants = request.args.get('numPlants')
-    enviroMoreThanQ =   f'WITH NumPlants AS (' \
-                        f' SELECT p.environmentid, COUNT(plantid) AS plant_count FROM plant p ' \
+    enviroMoreThanQ =   f'WITH NumPlants AS ( ' \
+                        f'SELECT p.environmentid, COUNT(plantid) AS plant_count FROM plant p ' \
                         f'GROUP BY p.environmentid HAVING COUNT(plantid) >= \'{numPlants}\' )' \
                         f'SELECT n.environmentid, e."Location", n.plant_count ' \
                         f'FROM NumPlants n, environment e '\
@@ -107,6 +107,7 @@ def envAtLeastXPlants():
     arrays['envMultiPlant']['cols'] = ['Environment ID', 'Location', 'Number of Plants']
     return render_template('GardenManager.html', arrays=arrays)
 
+# Division query - find all dates where all of the environments were watered
 @app.route('/division', methods=['GET'])
 def division():
     divisionQ = '''WITH Waterings AS (

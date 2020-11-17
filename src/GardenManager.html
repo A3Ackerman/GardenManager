@@ -206,6 +206,31 @@
 </div>
 
 <div>
+    <h2>Join: plant has pestSighting</h2>
+    <form id="pestSighting" action="/pestSighting" method="GET">
+        <label>Date:</label>
+        <input type="date" name="date">
+        <button>Get plant pest-sightings</button>
+    </form>
+    {% if 'pestSighting' in arrays %}
+    <table border=1>
+        <tr>
+            {% for colname in arrays['pestSighting']['cols'] %}
+            <th> {{ colname }} </th>
+            {% endfor %}
+        </tr>
+        {% for row in arrays['pestSighting']['res'] %}
+        <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+
+<div>
 <hr>
     <h2>Find All Dates Where All Environments Were Watered</h2>
     <form action="/division" method="GET">

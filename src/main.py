@@ -140,6 +140,20 @@ def select_pots():
     arrays['pots']['res'] = connectAndQuery(potsQ)
     return render_template('GardenManager.html', arrays=arrays)
 
+# join query
+@app.route('/pestSighting')
+def join_plant_has_pest():
+    date = request.args.get('date', None)
+    arrays['pestSighting'] = {}
+    if date:
+        arrays['pestSighting']['cols'] = ['Plant ID', 'Species', 'Pest Name']
+        pestSightingQ = f'SELECT P.PlantID, P.Species, PS.PestName FROM Plant P, Has H, PestSighting PS WHERE P.PlantID = H.PlantID AND H.SightingID = PS.SightingID AND PS."Date" = \'{date}\''
+    else:
+        pestSightingQ = 'SELECT P.PlantID, P.Species, PS.PestName, ps."Date" FROM Plant P, Has H, PestSighting PS WHERE P.PlantID = H.PlantID AND H.SightingID = PS.SightingID'
+        arrays['pestSighting']['cols'] = ['Plant ID', 'Species', 'Pest Name', 'Date']
+    arrays['pestSighting']['res'] = connectAndQuery(pestSightingQ)
+    return render_template('GardenManager.html', arrays=arrays)
+
 
 def connectAndQuery(sql, fetch=True):
     conn = psycopg2.connect(f'dbname={db} user={user} password={pw} host={url}')

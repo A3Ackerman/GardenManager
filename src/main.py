@@ -3,7 +3,7 @@ import psycopg2
 
 user = 'GardenManager'
 pw = 'gardenManager'
-url = 'localhost'
+url = 'db'
 db = 'GardenManager'
 
 app = Flask(__name__, template_folder='')

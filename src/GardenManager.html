@@ -150,3 +150,27 @@
     </table>
     {% endif %}
 </div>
+
+<div>
+<hr>
+    <h2>Find Dates Where All Environments Were Watered</h2>
+    <form action="/division" method="GET">
+        <button name='sql' value="division">Find dates where all environments were watered</button>
+    </form>
+    {% if 'division' in arrays %}
+    <table border=1>
+        <tr>
+            {% for colname in arrays['division']['cols'] %}
+            <th> {{ colname }} </th>
+            {% endfor %}
+        </tr>
+        {% for row in arrays['division']['res'] %}
+        <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>

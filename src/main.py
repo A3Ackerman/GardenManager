@@ -155,6 +155,15 @@ def join_plant_has_pest():
     arrays['pestSighting']['res'] = connectAndQuery(pestSightingQ)
     return render_template('GardenManager.html', arrays=arrays)
 
+@app.route('/plants_group_by')
+def plants_group_by():
+    plants_group_by = 'SELECT Species, COUNT(DISTINCT PlantID) From Plant GROUP BY Species'
+    arrays['plants_group_by'] = {}
+    arrays['plants_group_by']['cols'] = ['Species', 'Count']
+    arrays['plants_group_by']['res'] = connectAndQuery(plants_group_by)
+    return render_template('GardenManager.html', arrays=arrays)
+
+
 
 def connectAndQuery(sql, fetch=True):
     conn = psycopg2.connect(f'dbname={db} user={user} password={pw} host={url}')

@@ -101,6 +101,31 @@
 
 <div>
     <hr>
+    <h2>Aggregate plants count group by plant</h2>
+    <form action="/plants_group_by" method="GET">
+        <button>Aggregate plants count group by plant</button>
+    </form>
+    {% if 'plants_group_by' in arrays %}
+    <table border=1>
+        <tr>
+            {% for colname in arrays['plants_group_by']['cols'] %}
+            <th> {{ colname }} </th>
+            {% endfor %}
+        </tr>
+        {% for row in arrays['plants_group_by']['res'] %}
+        <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+
+
+<div>
+    <hr>
     <h2>Project Variety, Genus, Species and EnvironmentID by PlantID</h2>
     <form id="project" action="/project" method="GET">
         <label for="projectPlantID">PlantID:</label>

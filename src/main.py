@@ -46,12 +46,13 @@ def insertPest():
 
 @app.route('/project')
 def project():
-    plantID = request.args.get('plantID')
+    plantID = request.args.get('projectPlantID')
     projectQ = f'SELECT Variety, Genus, Species, EnvironmentID FROM Plant WHERE PlantID = {plantID};'
     arrays['project'] = {}
     arrays['project']['res'] = connectAndQuery(projectQ)
     arrays['project']['cols'] = ['variety', 'genus', 'species', 'environmentID']
     return render_template('GardenManager.html', arrays=arrays)
+
 
 @app.route('/deletePlant', methods=['GET', 'POST'])
 def deletePlant():
@@ -66,8 +67,6 @@ def deletePlant():
 
 @app.route('/plant', methods=['GET', 'POST'])
 def plant():
-    #we run into some issues here with deleting from the plant table.
-    # also just found out that forms only work with get and post requests
     if request.method == 'POST':
         sql = request.form['sql']
         if sql == "deletePlant":
@@ -92,6 +91,7 @@ def showPlantTable():
     arrays['plant']['cols'] = ['Plant ID', 'Variety', 'Genus', 'Species', 'Colour', 'Health Status', 'Environment ID']
     return render_template('GardenManager.html', arrays=arrays)
 
+
 # Aggregation with having: find environments that have at least <input> number of plants
 @app.route('/envMultiPlant')
 def envAtLeastXPlants():
@@ -106,6 +106,7 @@ def envAtLeastXPlants():
     arrays['envMultiPlant']['res'] = connectAndQuery(enviroMoreThanQ)
     arrays['envMultiPlant']['cols'] = ['Environment ID', 'Location', 'Number of Plants']
     return render_template('GardenManager.html', arrays=arrays)
+
 
 # Division query - find all dates where all of the environments were watered
 @app.route('/division', methods=['GET'])
@@ -125,6 +126,7 @@ def division():
     arrays['division']['res'] = connectAndQuery(divisionQ)
     arrays['division']['cols'] = ['Date']
     return render_template('GardenManager.html', arrays=arrays)
+
 
 # select query
 @app.route('/pots')
@@ -163,6 +165,20 @@ def plants_group_by():
     arrays['plants_group_by']['res'] = connectAndQuery(plants_group_by)
     return render_template('GardenManager.html', arrays=arrays)
 
+
+
+@app.route('/nestedAgg', methods=['GET'])
+def nestedAgg():
+    if request.method == 'GET':
+        nestedAggQ = f'SELECT vc.species, vc.num_plants ' \
+                     f'FROM (SELECT p.species, COUNT(plantid) AS num_plants FROM plant p GROUP BY p.species) AS vc ' \
+                     f'WHERE vc.num_plants = ' \
+                     f'(SELECT MAX(temp.num_plants) ' \
+                     f'FROM (SELECT p.species, COUNT(plantid) AS num_plants FROM plant p GROUP BY p.species) AS temp)'
+        arrays['nestedAgg'] = {}
+        arrays['nestedAgg']['res'] = connectAndQuery(nestedAggQ)
+        arrays['nestedAgg']['cols'] = ['Species', 'Number of Plants']
+        return render_template('GardenManager.html', arrays=arrays)
 
 
 def connectAndQuery(sql, fetch=True):

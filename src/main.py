@@ -26,6 +26,7 @@ def sampleQuery():
     return render_template('GardenManager.html', arrays=arrays)
 
 
+# Insert into Pest table
 @app.route('/pest', methods=['GET', 'POST'])
 def insertPest():
     if request.method == 'POST':
@@ -44,6 +45,7 @@ def insertPest():
         return render_template('GardenManager.html', arrays=arrays)
 
 
+# Project Variety, Genus, Species and EnvironmentID by PlantID
 @app.route('/project')
 def project():
     plantID = request.args.get('projectPlantID')
@@ -54,17 +56,7 @@ def project():
     return render_template('GardenManager.html', arrays=arrays)
 
 
-@app.route('/deletePlant', methods=['GET', 'POST'])
-def deletePlant():
-    if request.method == 'POST':
-        plantIDtoDelete = request.form["plantID"]
-        deletePlantQ = f'DELETE FROM plant WHERE plantid={plantIDtoDelete};'
-        connectAndQuery(deletePlantQ, False)
-        return render_template('GardenManager.html', arrays=arrays)
-    else:
-        return showPlantTable()
-
-
+# Delete and Update plant table
 @app.route('/plant', methods=['GET', 'POST'])
 def plant():
     if request.method == 'POST':

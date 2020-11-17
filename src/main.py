@@ -88,12 +88,20 @@ def showPlantTable():
 @app.route('/envMultiPlant')
 def envAtLeastXPlants():
     numPlants = request.args.get('numPlants')
-    enviroMoreThanQ =   f'WITH NumPlants AS ( ' \
-                        f'SELECT p.environmentid, COUNT(plantid) AS plant_count FROM plant p ' \
-                        f'GROUP BY p.environmentid HAVING COUNT(plantid) >= \'{numPlants}\' )' \
-                        f'SELECT n.environmentid, e."Location", n.plant_count ' \
-                        f'FROM NumPlants n, environment e '\
-                        f'WHERE n.environmentid = e.environmentid ;'
+    if numPlants:
+        enviroMoreThanQ = f'WITH NumPlants AS ( ' \
+                          f'SELECT p.environmentid, COUNT(plantid) AS plant_count FROM plant p ' \
+                          f'GROUP BY p.environmentid HAVING COUNT(plantid) >= \'{numPlants}\' )' \
+                          f'SELECT n.environmentid, e."Location", n.plant_count ' \
+                          f'FROM NumPlants n, environment e ' \
+                          f'WHERE n.environmentid = e.environmentid ;'
+    else:
+        enviroMoreThanQ = '''WITH NumPlants AS ( 
+                                        SELECT p.environmentid, COUNT(plantid) AS plant_count FROM plant p
+                                        GROUP BY p.environmentid HAVING COUNT(plantid) >= 2)
+                                SELECT n.environmentid, e."Location", n.plant_count
+                                FROM NumPlants n, environment e
+                                WHERE n.environmentid = e.environmentid ;'''
     arrays['envMultiPlant'] = {}
     arrays['envMultiPlant']['res'] = connectAndQuery(enviroMoreThanQ)
     arrays['envMultiPlant']['cols'] = ['Environment ID', 'Location', 'Number of Plants']
@@ -149,27 +157,38 @@ def join_plant_has_pest():
     arrays['pestSighting']['res'] = connectAndQuery(pestSightingQ)
     return render_template('GardenManager.html', arrays=arrays)
 
+# Aggregation group by: group plants by (genus, species)
 @app.route('/plants_group_by')
 def plants_group_by():
-    plants_group_by = 'SELECT Species, COUNT(DISTINCT PlantID) From Plant GROUP BY Species'
+    plants_group_by = '''SELECT s.commonname, p.Genus, p.Species, COUNT(DISTINCT p.PlantID) From Plant p, Species s 
+                         WHERE s.genus = p.genus AND s.species = p.species GROUP BY s.commonname, p.Genus, p.Species'''
     arrays['plants_group_by'] = {}
-    arrays['plants_group_by']['cols'] = ['Species', 'Count']
+    arrays['plants_group_by']['cols'] = ['Common Name', 'Genus', 'Species', 'Count']
     arrays['plants_group_by']['res'] = connectAndQuery(plants_group_by)
     return render_template('GardenManager.html', arrays=arrays)
 
 
-
+# Nested aggregation: Show species with the most number of plants
 @app.route('/nestedAgg', methods=['GET'])
 def nestedAgg():
     if request.method == 'GET':
-        nestedAggQ = f'SELECT vc.species, vc.num_plants ' \
-                     f'FROM (SELECT p.species, COUNT(plantid) AS num_plants FROM plant p GROUP BY p.species) AS vc ' \
-                     f'WHERE vc.num_plants = ' \
-                     f'(SELECT MAX(temp.num_plants) ' \
-                     f'FROM (SELECT p.species, COUNT(plantid) AS num_plants FROM plant p GROUP BY p.species) AS temp)'
+        nestedAggQ = '''SELECT s.commonname, vc.num_plants
+                        FROM species s,
+                           (SELECT p.genus, p.species, COUNT(plantid) AS num_plants
+                            FROM plant p
+                            GROUP BY p.genus, p.species) AS vc
+                        WHERE
+                            s.species = vc.species
+                            AND s.genus = vc.genus
+                            AND vc.num_plants = (
+                            SELECT MAX(temp.num_plants)
+                            FROM
+                                (SELECT p.genus, p.species, COUNT(plantid) AS num_plants
+                                FROM plant p
+                                GROUP BY p.genus, p.species) AS TEMP)'''
         arrays['nestedAgg'] = {}
         arrays['nestedAgg']['res'] = connectAndQuery(nestedAggQ)
-        arrays['nestedAgg']['cols'] = ['Species', 'Number of Plants']
+        arrays['nestedAgg']['cols'] = ['Species (Common Name)', 'Number of Plants']
         return render_template('GardenManager.html', arrays=arrays)
 
 

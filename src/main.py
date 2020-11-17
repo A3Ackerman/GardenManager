@@ -108,6 +108,22 @@ def envAtLeastXPlants():
     return render_template('GardenManager.html', arrays=arrays)
 
 
+# select query
+@app.route('/pots')
+def select_pots():
+    op = request.args.get('op')
+    radius = request.args.get('radius', None)
+    colour = request.args.get('colour', None)
+    if radius and colour:
+        potsQ = f'select * from pot where "Radius" {op} {radius} and colour = \'{colour}\''
+    else:
+        potsQ = 'select * from pot'
+    arrays['pots'] = {}
+    arrays['pots']['cols'] = ['Environment ID', 'Colour', 'Radius', 'Height']
+    arrays['pots']['res'] = connectAndQuery(potsQ)
+    return render_template('GardenManager.html', arrays=arrays)
+
+
 def connectAndQuery(sql, fetch=True):
     conn = psycopg2.connect(f'dbname={db} user={user} password={pw} host={url}')
     cur = conn.cursor()

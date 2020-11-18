@@ -150,9 +150,14 @@ def join_plant_has_pest():
     arrays['pestSighting'] = {}
     if date:
         arrays['pestSighting']['cols'] = ['Plant ID', 'Species', 'Pest Name']
-        pestSightingQ = f'SELECT P.PlantID, P.Species, PS.PestName FROM Plant P, Has H, PestSighting PS WHERE P.PlantID = H.PlantID AND H.SightingID = PS.SightingID AND PS."Date" = \'{date}\''
+        pestSightingQ = f'SELECT P.PlantID, S.commonname, PS.PestName FROM Plant P, Has H, PestSighting PS, Species S ' \
+                        f'WHERE P.Genus = S.Genus AND P.Species = S.Species AND P.PlantID = H.PlantID ' \
+                            f'AND H.SightingID = PS.SightingID AND PS."Date" = \'{date}\''
     else:
-        pestSightingQ = 'SELECT P.PlantID, P.Species, PS.PestName, ps."Date" FROM Plant P, Has H, PestSighting PS WHERE P.PlantID = H.PlantID AND H.SightingID = PS.SightingID'
+        pestSightingQ = '''SELECT P.PlantID, S.commonname, PS.PestName, ps."Date" 
+                           FROM Plant P, Has H, PestSighting PS, Species S 
+                           WHERE P.PlantID = H.PlantID AND H.SightingID = PS.SightingID
+                                AND P.Genus = S.Genus AND P.Species = S.Species'''
         arrays['pestSighting']['cols'] = ['Plant ID', 'Species', 'Pest Name', 'Date']
     arrays['pestSighting']['res'] = connectAndQuery(pestSightingQ)
     return render_template('GardenManager.html', arrays=arrays)

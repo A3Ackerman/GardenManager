@@ -3,7 +3,7 @@ import psycopg2
 
 user = 'GardenManager'
 pw = 'gardenManager'
-url = 'db'
+url = 'db-web.default.svc.cluster.local'
 db = 'GardenManager'
 
 app = Flask(__name__, template_folder='')
